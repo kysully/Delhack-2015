@@ -1,6 +1,5 @@
 module.exports = {
-  user: 'jkeeler',
-  pass: '',
-  db: 'delhack',
-  conString: 'postgres://USER:PASS@localhost/DBNAME.db'
+  user: 'postgres',
+  pass: 'postgres',
+  db: 'delhack'
 };
