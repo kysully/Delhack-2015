@@ -169,19 +169,12 @@ router.post('/res/:rid/patron', function(req, res, next) {
  //    UPDATE    //
 //==============//
 
-// STATUS: Un-implemented
-router.update('/', function(req, res, next) {
-  res.render('home.html');
-})
+
 
   //==============//
  //    DELETE    //
 //==============//
 
-// STATUS: Un-implemented
-router.delete('/', function(req, res, next) {
-  res.render('home.html');
-})
 
 module.exports = router;
 
