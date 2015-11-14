@@ -1,9 +1,13 @@
 var router = require('express').Router();
     pg     = require('pg');
 
+// Connect to the postgres database for sessions
+var conString = 'postgres://' + dbCon.user + ':' + dbCon.pass + '@localhost/' +
+  dbCon.db;
+
 router.get('/', function(req, res, next) {
-  res.json({"message": "welcome"});
-})
+  res.json([{message: "welcome"}]);
+});
 
 
   //==============//
@@ -21,8 +25,11 @@ router.get('/', function(req, res, next) {
 * - returns all the info for all the restaurants
 */
 router.get('/res', function(req, res, next) {
-  res.json()
-})
+
+	var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -38,8 +45,10 @@ router.get('/res', function(req, res, next) {
 * patrons in given restaurant
 */
 router.get('/res/:rid', function(req, res, next) {
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -54,8 +63,10 @@ router.get('/res/:rid', function(req, res, next) {
 */
 router.get('/res/:rid/admin', function(req, res, next) {
 	//check priviledges first
-  res.json()
-})
+	var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -65,8 +76,10 @@ router.get('/res/:rid/admin', function(req, res, next) {
 * - returns a lis of all current flashdeals for the given restaurant
 */
 router.get('/res/:rid/flashdeals', function(req, res, next) {
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -77,8 +90,10 @@ router.get('/res/:rid/flashdeals', function(req, res, next) {
 * - returns all the patrons ever at the restaurant
 */
 router.get('/res/:rid/historical', function(req, res, next) {
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -89,8 +104,10 @@ router.get('/res/:rid/historical', function(req, res, next) {
 */
 router.get('/flashdeals', function(req, res, next) {
 	//Note, the function here should call the res/:rid/flashdeals function for all restaurants
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -101,8 +118,10 @@ router.get('/flashdeals', function(req, res, next) {
 */
 router.get('/flashdeals/:fid', function(req, res, next) {
 	//Note, the function here should call the res/:rid/flashdeals function for all restaurants
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 // STATUS: Un-implemented
 /**
@@ -114,8 +133,10 @@ router.get('/flashdeals/:fid', function(req, res, next) {
 */
 
 router.get('/respop', function(req, res, next) {
-  res.json()
-})
+  var jsonToReturn = {status: "NOT implemented"};
+
+  res.json(jsonToReturn);
+});
 
 
   //==============//
@@ -132,7 +153,7 @@ router.get('/respop', function(req, res, next) {
 */
 router.post('/res/:rid/historical', function(req, res, next) {
   res.body()
-})
+});
 
 // STATUS: Un-implemented
 /**
@@ -148,7 +169,7 @@ router.post('/res/:rid/flashdeal', function(req, res, next) {
 	//check priviledges
 	//connect to database to make a new flashdeal in the database
   res.body()
-})
+});
 
 // STATUS: Un-implemented
 /**
@@ -162,7 +183,7 @@ router.post('/res/:rid/patron', function(req, res, next) {
 	//check priviledges
 	//connect to database to make a new patron in the database
   res.body()
-})
+});
 
 
   //==============//
