@@ -8,7 +8,7 @@ var express    = require('express');
     cookies    = require('cookie-parser');
     session    = require('express-session');
     pgStore    = require('connect-pg-simple')(session);
-    //dbCon      = require('./config/db');
+    dbCon      = require('./config/db');
 
 // =============================================================================
 // EXPRESS CONFIGURATION
@@ -21,17 +21,17 @@ app.set('views', path.resolve('src/client/html'));
 app.use(bodyParser.json());
 
 // Connect to the postgres database for sessions
-//var conString = 'postgres://' + dbCon.user + ':' + dbCon.pass + '@localhost/' +
-  //dbCon.db;
+var conString = 'postgres://' + dbCon.user + ':' + dbCon.pass + '@localhost/' +
+  dbCon.db;
 
 app.use(cookies());
 app.use(session({
     secret: 'adfhsadfjkashdnfceo',
     resave: false,
     saveUninitialized: true,
-    // store: new pgStore({
-    //   conString: conString
-    // }),
+    store: new pgStore({
+      conString: conString
+    }),
     cookie: { maxAge: 1 * 60 * 60 * 1000 }
 }));
 
