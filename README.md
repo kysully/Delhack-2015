@@ -2,7 +2,7 @@
 
 **Team:** Jeremy Keeler, Kyle Sullivan, and Natalie Lane
 
-**Project: Restaurant Heat Map+
+**Project:** Restaurant Heat Map+
 
 **Description:**
 
