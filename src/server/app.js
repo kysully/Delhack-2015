@@ -36,6 +36,7 @@ app.use(session({
 }));
 
 // Set our rendering engine to EJS
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 // =============================================================================
