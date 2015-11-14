@@ -54,4 +54,7 @@ app.get('*', function(req, res, next) {
   res.send('404');
 });
 
+//TODO: FUNCTION to loop and apply little's law to all active patrons
+//      across all restaurants
+
 module.exports = app;
