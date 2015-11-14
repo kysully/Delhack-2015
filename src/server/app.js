@@ -15,6 +15,7 @@ var express    = require('express');
 // =============================================================================
 // Define where our static files will be found and views are held
 app.use(express.static(path.resolve('src/client')));
+app.set('views', path.resolve('src/client/html'));
 
 // Add body parser to parse requests easiers
 app.use(bodyParser.json());
@@ -33,6 +34,18 @@ app.use(session({
     // }),
     cookie: { maxAge: 1 * 60 * 60 * 1000 }
 }));
+
+// Set our rendering engine to EJS
+app.set('view engine', 'ejs');
+
+// =============================================================================
+// ROUTES
+// =============================================================================
+var main_router = require('./main_router');
+var api_router = require('./api_router');
+
+app.use('/', main_router);
+app.use('/api', api_router);
 
 // Catch all other calls and return a 404 page and status
 app.get('*', function(req, res, next) {

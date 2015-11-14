@@ -1,8 +1,5 @@
 node_modules/
-src/client/public/vend/
-src/server/config/
-public/vend/
-public/img/albums/
+server/config/
 
 # Compiled source #
 ###################
