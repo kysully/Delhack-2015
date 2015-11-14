@@ -38,3 +38,4 @@ src/server/config/
 .Trashes
 ehthumbs.db
 Thumbs.db
+src/server/config/db.js

@@ -169,12 +169,13 @@ router.post('/res/:rid/patron', function(req, res, next) {
  //    UPDATE    //
 //==============//
 
-
+//no functions
 
   //==============//
  //    DELETE    //
 //==============//
 
+//no functions
 
 module.exports = router;
 
