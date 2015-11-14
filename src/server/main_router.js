@@ -1,11 +1,11 @@
 var router = require('express').Router();
 
-// STATUS: Un-implemented
+// STATUS: Partially implemented, being implemented by Natalie Lane
 router.get('/', function(req, res, next) {
   res.render('home.html');
 })
 
-// STATUS: Un-implemented
+// STATUS: Partially implemented, being implemented by Jeremy Keeler
 router.get('/live', function(req, res, next) {
   res.render('live');
 });
