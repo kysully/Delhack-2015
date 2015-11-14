@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 // STATUS: Un-implemented
 router.get('/live', function(req, res, next) {
-  res.render('live.html');
+  res.render('live');
 });
 
 // STATUS: Un-implemented
