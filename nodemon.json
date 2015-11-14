@@ -1,0 +1,6 @@
+{
+  "verbose": false,
+  "ignore": ["public/*", "src/client/*", "bower_components/*", "node_modules/*",
+             ".gitignore", "gulpfiles.js", "scripts/*", "LICENSE", "bower.json",
+             "nodemon.json", "package.json", "README.md"]
+}
