@@ -170,7 +170,6 @@ router.post('/res/:rid/historical', function(req, res, next) {
 router.post('/res/:rid/flashdeal', function(req, res, next) {
 	//check priviledges
 	//connect to database to make a new flashdeal in the database
-  console.log(req.body);
   dbh.postFlashDeal(res, req.params.rid, req.body);
 });
 
@@ -185,7 +184,7 @@ router.post('/res/:rid/flashdeal', function(req, res, next) {
 router.post('/res/:rid/patron', function(req, res, next) {
 	//check priviledges
 	//connect to database to make a new patron in the database
-  res.body()
+  dbh.postPatron(res, req.params.rid, req.body);
 });
 
 
