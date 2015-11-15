@@ -49,4 +49,8 @@ router.get('/input_deal', function(req, res, next) {
   res.render('deal_input');
 });
 
+router.get('/about', function(req, res, next) {
+  res.render('about');
+});
+
 module.exports = router;

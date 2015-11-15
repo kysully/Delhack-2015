@@ -73,3 +73,26 @@ img {
   width: 25px;
   height: 25px;
 }
+
+.bananas {
+  background-color: black;
+  color: white;
+}
+
+.animate {
+  width: 200px;
+  height: auto;
+  transition-property: width;
+  transition-duration: 2s;
+  transition: all 2.0s ease-in;
+}
+
+.animate:hover {
+  width: 600px;
+  height: auto;
+}
+
+.move {
+  left: 100%;
+  margin-left: -100px;
+}
