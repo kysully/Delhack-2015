@@ -83,12 +83,48 @@ app.controller('MapController', ['$scope', '$location', '$http',
 app.controller('RestaurantController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     $scope.res = {
-      name: "Temp"
+      name: "Newark Deli & Bagels",
+      rid: window.location.href.split("/").pop(),
+      telephone: "302-xxx-xxxx",
+      website: "www.ndb.com",
+      logo_url: "www.ndb.com/logo",
+      description: "The best bagel shop ever :)",
+      active_patrons: 20,
+      capacity: 20,
+      lat: 39.683231,
+      long: -75.752073
     };
 
-    /*
-    $http.get('/api/res').success(function(data) {
+    var dummy_deals = [
+      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
+      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
+      code: "NID-83W", fid: 6,
+      start_date: "", end_date: ""}
+    ];
 
+    $scope.deals = dummy_deals;
+
+    // Create the leaflet map
+    var map = L.map('minimap').setView([$scope.res.lat, $scope.res.long], 17);
+
+    // Add the MapBox map data
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'jerkeeler.ciezvjb551emgskm3sptep0iu',
+        accessToken: 'pk.eyJ1IjoiamVya2VlbGVyIiwiYSI6ImNpZXp2amNhdDFlYzBzaGtyNG1yYXd1YmsifQ.NuTiQ7Dkv5-f2_9ajTzZZw'
+    }).addTo(map);
+
+    var new_marker = L.marker([$scope.res.lat, $scope.res.long]);
+    new_marker.addTo(map);
+
+    /*
+    $http.get('/api/res/' + $scope.rid).success(function(data) {
+      $scope.res = data;
+    });
+
+    $http.get('/api/res/' + $scope.rid + '/flashdeals').success(function(data) {
+      $scope.deals = data;
     });
     */
   }

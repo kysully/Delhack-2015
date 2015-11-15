@@ -15,3 +15,9 @@ body {
 .panel:hover {
   cursor: pointer;
 }
+
+#minimap {
+  height: 250px;
+  width: 250px;
+  margin-top: 20px;
+}
