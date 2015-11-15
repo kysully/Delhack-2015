@@ -20,7 +20,7 @@ router.get('/res', function(req, res, next) {
   res.render('res_list.html');
 });
 
-// STATUS: Un-implemented
+// STATUS: Mostly implemented, only D3 graphs are left
 router.get('/res/:rid', function(req, res, next) {
   res.render('res');
 });

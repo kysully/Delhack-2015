@@ -6,9 +6,10 @@ var create_markers = function(map, data) {
   var markers = [];
   for(var i = 0, len = data.length; i < len; i++) {
     var new_marker = L.marker([data[i].lat, data[i].long]);
-    new_marker.bindPopup('<h2><a href="/res/' + data[i].rid + '">' + data[i].name +
+    new_marker.bindPopup('<img class="popup_img" src="' + data[i].logo_url + '" alt="' + data[i].name + ' logo ">' +
+      '<h2 class="popup_header"><a href="/res/' + data[i].rid + '">' + data[i].name +
       '</a></h2><br>' +
-      '<h4>Current Customers: ' + data[i].active_patrons + ' / ' + data[i].capacity +
+      '<h4 class="popup_customers">Current Customers: ' + data[i].active_patrons + ' / ' + data[i].capacity +
       '</h4><br>');
     new_marker.addTo(map);
     markers.push(new_marker);
@@ -27,6 +28,10 @@ var generateHeatLayer = function(map, data) {
   return heatLayer;
 }
 
+var visitUrl = function(url) {
+  document.location.href = url;
+}
+
 app.controller('MapController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     // Create the leaflet map
@@ -41,7 +46,7 @@ app.controller('MapController', ['$scope', '$location', '$http',
     }).addTo(map);
 
     $scope.visitDeal = function(fid) {
-      document.location.href = '/flashdeals/' + fid;
+      visitUrl('/flashdeals/' + fid);
     }
 
     // MAKE API REQUEST TO GRAB ALL THE DATA FOR RESTAURANTS
@@ -59,11 +64,11 @@ app.controller('MapController', ['$scope', '$location', '$http',
 
     var dummy_data = [
       { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
-      capacity: 20, active_patrons: 20 },
+      capacity: 20, active_patrons: 20, logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif" },
       { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
-      active_patrons: 40 },
+      active_patrons: 40, logo_url: "www.temp.com/logo" },
       { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
-      capacity: 100, active_patrons: 100 }
+      capacity: 100, active_patrons: 100, logo_url: "www.temp.com/logo" }
     ];
 
     var markers = create_markers(map, dummy_data);
@@ -104,7 +109,7 @@ app.controller('RestaurantController', ['$scope', '$location', '$http',
       rid: window.location.href.split("/").pop(),
       telephone: "302-xxx-xxxx",
       website: "www.ndb.com",
-      logo_url: "www.ndb.com/logo",
+      logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif",
       description: "The best bagel shop ever :)",
       active_patrons: 18,
       capacity: 20,
@@ -136,6 +141,10 @@ app.controller('RestaurantController', ['$scope', '$location', '$http',
     var new_marker = L.marker([$scope.res.lat, $scope.res.long]);
     new_marker.addTo(map);
     update_cap_colors($scope.res.active_patrons, $scope.res.capacity);
+
+    $scope.visitDeal = function(fid) {
+      visitUrl('/flashdeals/' + fid);
+    }
 
     /*
     $http.get('/api/res/' + $scope.rid).success(function(data) {

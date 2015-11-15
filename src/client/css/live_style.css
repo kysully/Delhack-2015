@@ -37,3 +37,19 @@ body {
 .max_cap {
   color: red;
 }
+
+.res_info {
+  margin-top: 20px;
+}
+
+.popup_img {
+  width: 100%;
+}
+
+.popup_header {
+  margin-bottom: 0px;
+}
+
+.popup_customers {
+  margin-top: 0px;
+}
