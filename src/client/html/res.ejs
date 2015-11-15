@@ -11,11 +11,37 @@
     <% include ./partials/nav %>
 
     <div class="container">
-      <div class="col-md-8">
-        <h1>{{res.name}}</h1>
+      <div class="col-md-12">
+        <div class="col-md-8">
+          <h1>{{res.name}}</h1>
+          <h4>{{res.address}}</h4>
+          <h4>Current capacity: <span id="cap" class="">{{res.active_patrons}} / {{res.capacity}}</span></h4>
+          <p>
+            Telephone: {{res.telephone}}<br>
+            Website: <a href="{{res.website}}" target="_blank">{{res.website}}</a>
+          </p>
+          <p>
+            {{res.description}}
+          </p>
+        </div>
+        <div class="col-md-4">
+          <div id="minimap" class="pull-right"></div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <div id="minimap"></div>
+      <div class="col-md-12 flashdeals">
+        <div class="panel panel-success" ng-click="visitDeal(deal.fid)" ng-repeat="deal in deals">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ deal.r_name }}</h3>
+          </div>
+          <div class="panel-body">
+            <h3>{{deal.f_name }} - {{deal.code}}</h3><br>
+            {{ deal.description }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <h3>PUT D3 GRAPHS HERE</h3>
       </div>
     </div>
 

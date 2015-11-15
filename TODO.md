@@ -9,7 +9,7 @@
 ### Frontend Todos
 - [ ] Restaurant page
   - [x] Minimap
-  - [ ] Basic info
+  - [x] Basic info
   - [ ] D3 graphs
 - [ ] Flash deals page
 - [ ] Specific flash deal page

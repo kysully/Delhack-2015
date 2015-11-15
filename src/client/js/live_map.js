@@ -80,6 +80,23 @@ app.controller('MapController', ['$scope', '$location', '$http',
   }
 ]);
 
+var update_cap_colors = function(active, cap) {
+  $('#cap').removeClass('normal_cap');
+  $('#cap').removeClass('high_cap');
+  $('#cap').removeClass('max_cap');
+
+  var percent = active / cap;
+  if(percent < .6) {
+    $('#cap').addClass('normal_cap');
+  }
+  if(percent >= .6 && percent <= .85) {
+    $('#cap').addClass('high_cap');
+  }
+  if(percent > .85) {
+    $('#cap').addClass('max_cap');
+  }
+};
+
 app.controller('RestaurantController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     $scope.res = {
@@ -89,10 +106,11 @@ app.controller('RestaurantController', ['$scope', '$location', '$http',
       website: "www.ndb.com",
       logo_url: "www.ndb.com/logo",
       description: "The best bagel shop ever :)",
-      active_patrons: 20,
+      active_patrons: 18,
       capacity: 20,
       lat: 39.683231,
-      long: -75.752073
+      long: -75.752073,
+      address: "35 E. Main Street, Newark DE, 19711"
     };
 
     var dummy_deals = [
@@ -117,10 +135,12 @@ app.controller('RestaurantController', ['$scope', '$location', '$http',
 
     var new_marker = L.marker([$scope.res.lat, $scope.res.long]);
     new_marker.addTo(map);
+    update_cap_colors($scope.res.active_patrons, $scope.res.capacity);
 
     /*
     $http.get('/api/res/' + $scope.rid).success(function(data) {
       $scope.res = data;
+      update_cap_colors($scope.res.active_patrons, $scope.res.capacity);
     });
 
     $http.get('/api/res/' + $scope.rid + '/flashdeals').success(function(data) {

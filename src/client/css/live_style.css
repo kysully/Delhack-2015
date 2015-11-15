@@ -21,3 +21,19 @@ body {
   width: 250px;
   margin-top: 20px;
 }
+
+.flashdeals {
+  margin-top: 20px;
+}
+
+.normal_cap {
+  color: blue;
+}
+
+.high_cap {
+  color: orange;
+}
+
+.max_cap {
+  color: red;
+}
