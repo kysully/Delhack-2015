@@ -26,7 +26,13 @@ var db_helpers = {
     pg.connect(dbh.conString, function(err, client, done) {
       if(dbh.handleError(err, client, done, res)) return;
 
-      var q = client.query({ name:'get_restaurants', text: 'SELECT * FROM "Restaurant";'});
+      var q = client.query({ name:'get_restaurants',
+       text: 'SELECT R.name as "r_name", R.rid, F.name as "f_name", '+
+       'F.description, F.fid, F.code, F.start_date, F.end_date, F.active, '+
+       'P."Current Customers" from "Restaurant" R LEFT OUTER JOIN "Flash_deal" F '+
+       'on R.rid = F.rid LEFT OUTER JOIN (SELECT rid, count(*) AS "Current Customers" '+
+       'FROM "Patron" WHERE active = true GROUP BY rid) as P on R.rid = P.rid ORDER BY R.rid;'
+     });
 
       q.on('row', function(row, result) {
         result.addRow(row);
@@ -130,6 +136,33 @@ var db_helpers = {
       });
     });
 
+  },
+
+  retrieveResPop: function(res){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      if(dbh.handleError(err, client, done, res)) return;
+
+      var q = client.query({ name:'get_restaurants', 
+        text: 'Select R.rid, R.name, R.lat, R.long, R.capacity, '+
+        'coalesce(P."active_patrons", 0) as "active_patrons" '+
+        'FROM "Restaurant" R LEFT OUTER JOIN (SELECT rid, '+
+        'sum(CASE WHEN active THEN 1 ELSE 0 END) AS "active_patrons" '+
+        'FROM "Patron" GROUP BY rid) P on R.rid = P.rid;'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+        res.json(result.rows);
+      });
+    });
   }
 
 };
