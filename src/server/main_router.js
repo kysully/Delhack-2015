@@ -15,7 +15,7 @@ router.get('/historic', function(req, res, next) {
   res.render('historic.html');
 });
 
-// STATUS: Un-implemented
+// STATUS: FINISHED
 router.get('/res', function(req, res, next) {
   res.render('res_list');
 });
@@ -40,8 +40,13 @@ router.get('/flashdeals/:fid', function(req, res, next) {
   res.render('flashdeal');
 });
 
+// STATUS: FINISHED
 router.get('/button', function(req, res, next) {
   res.render('button');
+});
+
+router.get('/input_deal', function(req, res, next) {
+  res.render('deal_input');
 });
 
 module.exports = router;

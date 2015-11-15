@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="live-map-app">
+  <head>
+    <title>Input Flash Deal</title>
+
+    <link rel="icon" type="image/png" href="/img/heat_logo.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+    <link rel="stylesheet" href="/css/live_style.css">
+  </head>
+
+  <body ng-controller="DealInputController">
+    <% include ./partials/nav %>
+
+    <div class="container">
+      <h1>Create New Flash Deal:</h1>
+      <form>
+        <div class="form-group">
+          <label>Restaurant ID:</label>
+          <input type="number" class="form-control" ng-model="new_flash.rid" placeholder="-1">
+        </div>
+        <div class="form-group">
+          <label>Title:</label>
+          <input type="text" class="form-control" ng-model="new_flash.title" placeholder="50% off next purchase!">
+        </div>
+        <div class="form-group">
+          <label>Description:</label>
+          <input type="text" class="form-control" ng-model="new_flash.description" placeholder="Get 50% off your next item in the next 3 hours. 1 per customer.">
+        </div>
+        <div class="form-group">
+          <label>Start Date:</label>
+          <input type="date" class="form-control" ng-model="start_date">
+        </div>
+        <div class="form-group">
+          <label>Start Time:</label>
+          <input type="time" class="form-control" ng-model="start_time">
+        </div>
+        <div class="form-group">
+          <label>End Date:</label>
+          <input type="date" class="form-control" ng-model="end_date">
+        </div>
+        <div class="form-group">
+          <label>End Time:</label>
+          <input type="time" class="form-control" ng-model="end_time">
+        </div>
+        <div class="form-group">
+          <label>Redemption Code:</label>
+          <input type="text" class="form-control" ng-model="new_flash.code" placeholder="ZT15D">
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="add_new_flash_deal()">Create New Flash Deal</button>
+      </form>
+
+    </div>
+
+    <% include ./partials/vendor %>
+    <script type="text/javascript" src="/js/live_map.js"></script>
+  </body>
+</html>

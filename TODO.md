@@ -16,4 +16,4 @@
 - [x] list of restaurants
 - [ ] Historical timeline page
 - [ ] Main page
-- [ ] Button page
+- [x] Button page

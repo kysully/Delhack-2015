@@ -201,11 +201,8 @@ app.controller('ButtonController', ['$scope', '$location', '$http',
     $scope.rid = -1;
     $scope.buttonPress = function() {
       var date_now = new Date();
-      var date_old = new Date();
       var now = date_now.toISOString().replace('T', ' ');
-      now = now.replace('Z', '');
-      var old = date_old.toISOString().replace('T', ' ');
-      old = old.replace('Z', '');
+      now = now.replace('Z', '');]
       var body = {
         time_in: "\'" + now + "\'",
         active: true,
@@ -213,6 +210,16 @@ app.controller('ButtonController', ['$scope', '$location', '$http',
       }
       console.log(now);
       $http.post('/api/res/' + $scope.rid + '/patron', body);
+    }
+  }
+]);
+
+app.controller('DealInputController', ['$scope', '$location', '$http',
+  function($scope, $location, $http) {
+    $scope.new_flash = {};
+
+    $scope.add_new_flash_deal = funciton() {
+
     }
   }
 ]);
