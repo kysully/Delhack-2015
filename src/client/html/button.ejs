@@ -1,0 +1,21 @@
+<!doctype html>
+<html ng-app="live-map-app">
+  <head>
+    <title>{{deal.r_name}}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+    <link rel="stylesheet" href="/css/live_style.css">
+  </head>
+  <body ng-controller="ButtonController">
+    <div class="container text-center">
+      <button class="super_btn btn btn-lg btn-primary" ng-click="buttonPress()">Add </button><br>
+      <br>
+      <label>Restaurant ID</label>
+      <input class="form-control" type="text" ng-model="rid">
+    </div>
+
+    <% include ./partials/vendor %>
+    <script type="text/javascript" src="/js/live_map.js"></script>
+  </body>
+</html>

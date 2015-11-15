@@ -53,3 +53,9 @@ body {
 .popup_customers {
   margin-top: 0px;
 }
+
+.super_btn {
+  width: 100%;
+  height: 400px;
+  font-size: 300px;
+}

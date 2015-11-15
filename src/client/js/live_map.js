@@ -195,3 +195,24 @@ app.controller('ResListController', ['$scope', '$location', '$http',
     });
   }
 ]);
+
+app.controller('ButtonController', ['$scope', '$location', '$http',
+  function($scope, $locaiton, $http) {
+    $scope.rid = -1;
+    $scope.buttonPress = function() {
+      var date_now = new Date();
+      var date_old = new Date();
+      var now = date_now.toISOString().replace('T', ' ');
+      now = now.replace('Z', '');
+      var old = date_old.toISOString().replace('T', ' ');
+      old = old.replace('Z', '');
+      var body = {
+        time_in: "\'" + now + "\'",
+        active: true,
+        time_out: "",
+      }
+      console.log(now);
+      $http.post('/api/res/' + $scope.rid + '/patron', body);
+    }
+  }
+]);

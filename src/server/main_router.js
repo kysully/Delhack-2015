@@ -40,4 +40,8 @@ router.get('/flashdeals/:fid', function(req, res, next) {
   res.render('flashdeal');
 });
 
+router.get('/button', function(req, res, next) {
+  res.render('button');
+});
+
 module.exports = router;
