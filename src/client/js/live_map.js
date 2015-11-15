@@ -159,8 +159,9 @@ app.controller('DealController', ['$scope', '$location', '$http',
     $scope.deal = {};
     // Grab restaurant data?
 
-    $http.get('/api/flashdeal/' + fid).success(function(data) {
-      $scope.deal = data;
+    $http.get('/api/flashdeals/' + fid).success(function(data) {
+      $scope.deal = data[0];
+      console.log(data[0]);
     });
   }
 ]);
@@ -202,7 +203,7 @@ app.controller('ButtonController', ['$scope', '$location', '$http',
     $scope.buttonPress = function() {
       var date_now = new Date();
       var now = date_now.toISOString().replace('T', ' ');
-      now = now.replace('Z', '');]
+      now = now.replace('Z', '');
       var body = {
         time_in: "\'" + now + "\'",
         active: true,
@@ -216,10 +217,36 @@ app.controller('ButtonController', ['$scope', '$location', '$http',
 
 app.controller('DealInputController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
-    $scope.new_flash = {};
+    $scope.new_flash = {
+      active: true
+    };
+    $scope.start_date = null;
+    $scope.start_time = null;
+    $scope.end_date = null;
+    $scope.end_time =null;
 
-    $scope.add_new_flash_deal = funciton() {
+    $scope.add_new_flash_deal = function() {
+      var start_string = '\'' + $scope.start_date.getFullYear() + '-' +
+        ($scope.start_date.getMonth() + 1) + '-' + $scope.start_date.getDate() +
+        ' ' + $scope.start_time.getHours() + ':' + $scope.start_time.getMinutes() +
+        ':' + $scope.start_time.getSeconds() + '\'';
 
+      var end_string = '\'' + $scope.end_date.getFullYear() + '-' +
+        ($scope.start_date.getMonth() + 1) + '-' + $scope.end_date.getDate() +
+        ' ' + $scope.end_time.getHours() + ':' + $scope.end_time.getMinutes() +
+        ':' + $scope.end_time.getSeconds() + '\'';
+
+      $scope.new_flash.start_date = start_string;
+      $scope.new_flash.end_date = end_string;
+      $scope.new_flash.name = '\'' + $scope.new_flash.name + '\'';
+      $scope.new_flash.description = '\'' + $scope.new_flash.description + '\'';
+      $scope.new_flash.code = '\'' + $scope.new_flash.code + '\'';
+
+      $http.post('/api/res/' + $scope.new_flash.rid + '/flashdeal', $scope.new_flash).success(function(data) {
+        console.log('boop');
+      });
+
+      console.log($scope.new_flash);
     }
   }
 ]);

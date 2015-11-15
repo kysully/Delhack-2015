@@ -4,7 +4,7 @@
 - [ ] Historical api for all restaurants at given time
 - [x] Patron post api
 - [x] Flash deal post api
-- [ ] Admin api routes
+- [x] Admin api routes
 
 ### Frontend Todos
 - [ ] Restaurant page
@@ -15,5 +15,5 @@
 - [x] Specific flash deal page
 - [x] list of restaurants
 - [ ] Historical timeline page
-- [ ] Main page
+- [x] Main page
 - [x] Button page
