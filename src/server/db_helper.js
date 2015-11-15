@@ -144,7 +144,7 @@ var db_helpers = {
       if(dbh.handleError(err, client, done, res)) return;
 
       var q = client.query({ name:'get_respop', 
-        text: 'Select R.rid, R.name, R.lat, R.long, R.capacity, '+
+        text: 'Select R.rid, R.name, R.logo_url, R.lat, R.long, R.capacity, '+
         'coalesce(P."active_patrons", 0) as "active_patrons" '+
         'FROM "Restaurant" R LEFT OUTER JOIN (SELECT rid, '+
         'sum(CASE WHEN active THEN 1 ELSE 0 END) AS "active_patrons" '+
