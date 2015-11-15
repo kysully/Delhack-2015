@@ -28,7 +28,7 @@ router.get('/res', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /res/:rid
 * <= JSON {name: "name", rid: 0, telephone: "302-xxx-xxxx",
@@ -47,7 +47,7 @@ router.get('/res/:rid', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /res/:rid/admin
 * <= JSON {name: "name", rid: 0, telephone: "302-xxx-xxxx",
@@ -65,7 +65,7 @@ router.get('/res/:rid/admin', function(req, res, next) {
   res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /res/:rid/flashdeals
 * <= JSON {name: "name1", current_flash_deals: [{fid: 0, code: "x212", description: "5% off"}] }
@@ -78,7 +78,7 @@ router.get('/res/:rid/flashdeals', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /res/:rid/hitorical
 * <= JSON {name: "name",  patrons: [{pid: 0, time_in: "12:00am",
@@ -87,12 +87,12 @@ router.get('/res/:rid/flashdeals', function(req, res, next) {
 * - returns all the patrons ever at the restaurant
 */
 router.get('/res/:rid/historical', function(req, res, next) {
-  var jsonToReturn = {status: "NOT implemented"};
-
-  res.json(jsonToReturn);
+  //var jsonToReturn = {status: "NOT implemented"};
+  dbh.retrieveHistorical(res, req.params.rid);
+  //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /flashdeals
 * <= JSON { [{name: "name1", current_flash_deals: [{fid: 0, code: "x212", description: "5% off"}]}] }
@@ -106,7 +106,7 @@ router.get('/flashdeals', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /flashdeals/:fid
 * <= JSON { {name: "name1", rid: 0,  flash_deal: {fid: 0, code: "x212", description: "5% off"}}
@@ -120,7 +120,7 @@ router.get('/flashdeals/:fid', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => GET /respop
 * <= JSON { [{name: "name1", active_patrons: 0}, {name: "name2", active_patrons: 0}] } 
@@ -146,10 +146,10 @@ router.get('/respop', function(req, res, next) {
 *    body: {date: "date", time: "timestamp"}
 * <= JSON { [{name: "name1", patrons: 0}, {name: "name2", patrons: 0}] } 
 *
-* - returns all the patrons ever at the restaurant
+* - returns all the patrons at the restaurant based on the given time
 */
 router.post('/res/:rid/historical', function(req, res, next) {
-  res.body()
+  res.body();
 });
 
 // STATUS: Un-implemented
