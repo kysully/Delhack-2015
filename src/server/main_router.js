@@ -32,12 +32,12 @@ router.get('/res/:rid/admin', function(req, res, next) {
 
 // STATUS: Un-implemented
 router.get('/flashdeals', function(req, res, next) {
-  res.render('flashdeals.html');
+  res.render('flashdeals');
 });
 
 // STATUS: Un-implemented
 router.get('/flashdeals/:fid', function(req, res, next) {
-  res.render('flashdeal.html');
+  res.render('flashdeal');
 });
 
 module.exports = router;

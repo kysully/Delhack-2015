@@ -11,8 +11,8 @@
   - [x] Minimap
   - [x] Basic info
   - [ ] D3 graphs
-- [ ] Flash deals page
-- [ ] Specific flash deal page
+- [x] Flash deals page
+- [x] Specific flash deal page
 - [ ] Historical timeline page
 - [ ] Main page
 - [ ] Button page

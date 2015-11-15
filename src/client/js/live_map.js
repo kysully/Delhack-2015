@@ -158,3 +158,50 @@ app.controller('RestaurantController', ['$scope', '$location', '$http',
     */
   }
 ]);
+
+app.controller('DealsController', ['$scope', '$location', '$http',
+  function($scope, $location, $http) {
+    $scope.deals = [
+
+    ];
+
+    var dummy_deals = [
+      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
+      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
+      code: "NID-83W", fid: 6,
+      start_date: "", end_date: ""},
+      {r_name: "Cal Tor", f_name: "FREE BURRITO", description: 'Get a free ' +
+      'burrito today!', code:'POOPLOOP1', fid:7, start_date:"", end_date:""}
+    ];
+
+    $scope.deals = dummy_deals;
+    $scope.visitDeal = function(fid) {
+      visitUrl('/flashdeals/' + fid);
+    }
+    /*
+    $http.get('/api/flashdeals').success(function(data) {
+      $scope.deals = data;
+    });
+    */
+  }
+]);
+
+app.controller('DealController', ['$scope', '$location', '$http',
+  function($scope, $location, $http) {
+    var fid = window.location.href.split("/").pop();
+
+    var dummy_deal = {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
+          description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
+          code: "NID-83W", fid: 6,
+          start_date: "", end_date: ""}
+
+    $scope.deal = dummy_deal;
+    // Grab restaurant data?
+    
+    /*
+    $http.get('/api/flashdeal/' + fid).success(function(data) {
+
+    });
+    */
+  }
+]);
