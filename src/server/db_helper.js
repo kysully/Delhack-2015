@@ -342,7 +342,7 @@ var db_helpers = {
         current_patrons = data[0]; //total patrons is stored here
         var old_time = new Date(last_checked);
         var new_time = new Date();
-        new_time = new_time.getTime() - (new_time.getTimezoneOffset() * 60000);
+        //new_time = new_time.getTime() - (new_time.getTimezoneOffset() * 60000);
         console.log("old time " + old_time.getTime());
         console.log("new time " + new_time);
         console.log("diff: " + (old_time.getTime() - new_time.getTime()));
