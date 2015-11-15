@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="live-map-app" ng-controller="RestaurantController">
+  <head>
+    <title>{{res.name}}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+    <link rel="stylesheet" href="/css/live_style.css">
+  </head>
+  <body>
+    <% include ./partials/nav %>
+
+    <div class="container">
+      <h1>{{res.name}}</h1>
+    </div>
+
+    <% include ./partials/vendor %>
+    <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+    <script type="text/javascript" src="/js/live_map.js"></script>
+  </body>
+</html>

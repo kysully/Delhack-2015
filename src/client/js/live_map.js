@@ -40,6 +40,10 @@ app.controller('MapController', ['$scope', '$location', '$http',
         accessToken: 'pk.eyJ1IjoiamVya2VlbGVyIiwiYSI6ImNpZXp2amNhdDFlYzBzaGtyNG1yYXd1YmsifQ.NuTiQ7Dkv5-f2_9ajTzZZw'
     }).addTo(map);
 
+    $scope.visitDeal = function(fid) {
+      document.location.href = '/flashdeals/' + fid;
+    }
+
     // MAKE API REQUEST TO GRAB ALL THE DATA FOR RESTAURANTS
     /*
     $http.get('/api/respop').success(function(data) {
@@ -66,8 +70,26 @@ app.controller('MapController', ['$scope', '$location', '$http',
     var heat = generateHeatLayer(map, dummy_data);
 
     var dummy_deals = [
-      
+      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
+      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
+      code: "NID-83W", fid: 6,
+      start_date: "", end_date: ""}
     ];
+
     $scope.deals = dummy_deals;
+  }
+]);
+
+app.controller('RestaurantController', ['$scope', '$location', '$http',
+  function($scope, $location, $http) {
+    $scope.res = {
+      name: "Temp"
+    };
+
+    /*
+    $http.get('/api/res').success(function(data) {
+
+    });
+    */
   }
 ]);

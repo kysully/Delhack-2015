@@ -5,25 +5,31 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
-    <link rel="stylesheet" href="css/live_style.css">
+    <link rel="stylesheet" href="/css/live_style.css">
   </head>
   <body ng-controller="MapController">
     <% include ./partials/nav %>
 
     <div class="container">
       <h1>Live Heat Map of Restaurant Popularity</h1>
+
       <div id="map"></div>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="deal in deals">
-          
-        </li>
-      </ul>
+
+      <div class="panel panel-success" ng-click="visitDeal(deal.fid)" ng-repeat="deal in deals">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ deal.r_name }}</h3>
+        </div>
+        <div class="panel-body">
+          <h3>{{deal.f_name }} - {{deal.code}}</h3><br>
+          {{ deal.description }}
+        </div>
+      </div>
     </div>
 
     <% include ./partials/vendor %>
     <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <script type="text/javascript" src="js/leaflet-heat.js"></script>
+    <script type="text/javascript" src="/js/leaflet-heat.js"></script>
 
-    <script type="text/javascript" src="js/live_map.js"></script>
+    <script type="text/javascript" src="/js/live_map.js"></script>
   </body>
 </html>

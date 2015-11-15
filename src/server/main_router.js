@@ -5,8 +5,7 @@ router.get('/', function(req, res, next) {
   res.render('home.html');
 })
 
-// STATUS: Partially implemented, being implemented by Jeremy Keeler
-// Almost completely done, flash deals not done.
+// STATUS: FINISHED
 router.get('/live', function(req, res, next) {
   res.render('live');
 });
@@ -23,7 +22,7 @@ router.get('/res', function(req, res, next) {
 
 // STATUS: Un-implemented
 router.get('/res/:rid', function(req, res, next) {
-  res.render('res', {});
+  res.render('res');
 });
 
 // STATUS: Un-implemented
