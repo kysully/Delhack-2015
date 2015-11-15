@@ -8,9 +8,16 @@
     <link rel="stylesheet" href="css/live_style.css">
   </head>
   <body ng-controller="MapController">
+    <% include ./partials/nav %>
+
     <div class="container">
       <h1>Live Heat Map of Restaurant Popularity</h1>
       <div id="map"></div>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="deal in deals">
+          
+        </li>
+      </ul>
     </div>
 
     <% include ./partials/vendor %>

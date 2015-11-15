@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
 })
 
 // STATUS: Partially implemented, being implemented by Jeremy Keeler
+// Almost completely done, flash deals not done.
 router.get('/live', function(req, res, next) {
   res.render('live');
 });

@@ -1,27 +1,15 @@
 var app = angular.module('live-map-app', []);
 var heat_dot_radius = 25;
 
-// Accumulate all of the flash deals into a nice array for display at the bottom
-// of the page
-var accumulate_deals = function(data) {
-  var deals = [];
-  for(var i = 0, len = data.length; i < len; i++) {
-    for(var j = 0, lenj = data[i].current_flash_deals.length; j < lenj; j++) {
-      deals.push(data[i].current_flash_deals[j]);
-    }
-  }
-  return deals;
-}
-
 // Create all of the markers for each restaurant
 var create_markers = function(map, data) {
   var markers = [];
   for(var i = 0, len = data.length; i < len; i++) {
     var new_marker = L.marker([data[i].lat, data[i].long]);
-    new_marker.bindPopup('<b>' + data[i].name + '</b><br>' +
-      'Website: ' + data[i].website + '<br>' +
-      '# Current Customers: ' + data[i].active_patrons + '<br>' +
-      '');
+    new_marker.bindPopup('<h2><a href="/res/' + data[i].rid + '">' + data[i].name +
+      '</a></h2><br>' +
+      '<h4>Current Customers: ' + data[i].active_patrons + ' / ' + data[i].capacity +
+      '</h4><br>');
     new_marker.addTo(map);
     markers.push(new_marker);
   }
@@ -42,7 +30,7 @@ var generateHeatLayer = function(map, data) {
 app.controller('MapController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     // Create the leaflet map
-    var map = L.map('map').setView([39.683421, -75.751226], 17);
+    var map = L.map('map').setView([39.683421, -75.751226], 18);
 
     // Add the MapBox map data
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -53,35 +41,33 @@ app.controller('MapController', ['$scope', '$location', '$http',
     }).addTo(map);
 
     // MAKE API REQUEST TO GRAB ALL THE DATA FOR RESTAURANTS
-    // $http.get('/api/res').success(function(data) {
-    //
-    // });
+    /*
+    $http.get('/api/respop').success(function(data) {
+      var markers = create_markers(map, dummy_data);
+      var heat = generateHeatLayer(map, dummy_data);
+    });*/
+
+    /*
+    $http.get('/api/flashdeals').success(function(data) {
+      $scope.deals = data;
+    });
+    */
+
     var dummy_data = [
-      { name: "Newark Deli & Bagels", rid: 1, telephone: "302-xxx-xxxx",
-      website: "www.ndb.com", logo_url: "www.ndb.com/logo",
-      capacity: 20,
-      description: "Best bagel shop in town!", lat: 39.683231,
-      long: -75.752073, active_patrons: 20, current_flash_deals: [
-        {fid: 0, code: "AXCADSF", description: "5% off", start_date: "",
-        end_date: ""}
-      ]},
+      { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
+      capacity: 20, active_patrons: 20 },
+      { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
+      active_patrons: 40 },
+      { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
+      capacity: 100, active_patrons: 100 }
+    ];
 
-      {name: "Cal Tor", rid: 2, telephone: "302-xxx-xxxx",
-      website: "www.caltor.com", logo_url: "www.caltor.com/logo",
-      capacity: 50, description: "BEST MEX EVER!", lat: 39.683068,
-      long: -75.751104, active_patrons: 40, current_flash_deals: []},
-
-      {name: "Trabant Chapel", rid: 3, telephone: "302-xxx-xxx",
-      website: "www.chapel.com", logo_url: "www.chapel.com/logo",
-      capcity: 100, description: "BEST HACKATHON EVER!", lat: 39.682760,
-      long: -75.754585, active_patrons: 1, current_flash_deals: []}
-    ]
-
-
-    var deals = accumulate_deals(dummy_data);
     var markers = create_markers(map, dummy_data);
     var heat = generateHeatLayer(map, dummy_data);
 
-    $scope.deals = deals;
+    var dummy_deals = [
+      
+    ];
+    $scope.deals = dummy_deals;
   }
 ]);

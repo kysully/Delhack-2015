@@ -26,3 +26,7 @@ p {
   top: 250px;
   width: 100%
 }
+
+body {
+  margin-top: 50px;
+}
