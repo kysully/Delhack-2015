@@ -16,9 +16,13 @@ server.listen(process.env.PORT || port, process.env.IP || '0.0.0.0', function() 
 });
 
 //find the shortest average wait and use that for the timeout
+//Little's Law tells us that the average number of customers
+//in the store L, is the effective arrival rate λ, times the 
+//average time that a customer spends in the store W, or simply:
 function littlesLaw()
 {
    //apply the forumla here
+   var L, A, W;
    setTimeout(littlesLaw, 60000);//once per minute?
 }
 
