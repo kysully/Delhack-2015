@@ -3,7 +3,7 @@
   /*width: 100%;*/
 }
 
-img{
+.main-img{
   /*background-image: url('../html/Newark_DE_Main_Street.jpg');*/
   -webkit-filter: blur(10px);
   filter: blur(10px);
@@ -29,4 +29,9 @@ p {
 
 body {
   margin-top: 50px;
+}
+
+.brand-img {
+  width: 25px;
+  height: 25px;
 }

@@ -68,3 +68,8 @@ body {
 img {
   max-width: 100%;
 }
+
+.brand-img {
+  width: 25px;
+  height: 25px;
+}
