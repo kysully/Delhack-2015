@@ -81,13 +81,13 @@ var db_helpers = {
 
       if(rid == -1){
         q = client.query({ name:'get_restaurants', 
-        text: 'SELECT R.name as "r_name", F.name as "f_name", F.description, F.code, ' +
+        text: 'SELECT R.name as "r_name", R.logo_url, F.name as "f_name", F.description, F.code, ' +
         'F.start_date, F.end_date from "Restaurant" R JOIN "Flash_deal" F on R.rid = F.rid ' +
         'WHERE F.active = TRUE;'}); 
       }
       else{
         q = client.query({ name:'get_restaurants', 
-        text: 'SELECT R.name as "r_name", F.name as "f_name", F.description, F.code, ' +
+        text: 'SELECT R.name as "r_name", R.logo_url, F.name as "f_name", F.description, F.code, ' +
         'F.start_date, F.end_date from "Restaurant" R JOIN "Flash_deal" F on R.rid = F.rid ' +
         'WHERE F.active = TRUE AND R.rid = ' + rid + ';'}); 
       }
