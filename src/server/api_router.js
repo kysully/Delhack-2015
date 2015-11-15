@@ -156,7 +156,7 @@ router.post('/res/:rid/historical', function(req, res, next) {
   res.body();
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => POST /res/:rid/flashdeal
 *    body: {name: "name", decription: "hi", start_date: "12:00am", end_date: "12:00pm",
@@ -173,7 +173,7 @@ router.post('/res/:rid/flashdeal', function(req, res, next) {
   dbh.postFlashDeal(res, req.params.rid, req.body);
 });
 
-// STATUS: Un-implemented
+// STATUS: Implemented
 /**
 * => POST /res/:rid/patron
 *    body: {time_in: "12:00am"}

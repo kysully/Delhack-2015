@@ -26,13 +26,19 @@ var db_helpers = {
     pg.connect(dbh.conString, function(err, client, done) {
       if(dbh.handleError(err, client, done, res)) return;
 
+     //  var q = client.query({ name:'get_restaurants',
+     //   text: 'SELECT R.name as "r_name", R.rid, F.name as "f_name", '+
+     //   'F.description, F.fid, F.code, F.start_date, F.end_date, F.active, '+
+     //   'P."Current Customers" from "Restaurant" R LEFT OUTER JOIN "Flash_deal" F '+
+     //   'on R.rid = F.rid LEFT OUTER JOIN (SELECT rid, count(*) AS "Current Customers" '+
+     //   'FROM "Patron" WHERE active = true GROUP BY rid) as P on R.rid = P.rid ORDER BY R.rid;'
+     // });
+
       var q = client.query({ name:'get_restaurants',
-       text: 'SELECT R.name as "r_name", R.rid, F.name as "f_name", '+
-       'F.description, F.fid, F.code, F.start_date, F.end_date, F.active, '+
-       'P."Current Customers" from "Restaurant" R LEFT OUTER JOIN "Flash_deal" F '+
-       'on R.rid = F.rid LEFT OUTER JOIN (SELECT rid, count(*) AS "Current Customers" '+
-       'FROM "Patron" WHERE active = true GROUP BY rid) as P on R.rid = P.rid ORDER BY R.rid;'
-     });
+       text: 'SELECT name, R.rid, telephone, website, logo_url, description, lat, long, '+
+       'capacity, address, P."active_patrons" from "Restaurant" R LEFT OUTER JOIN '+
+       '(SELECT rid, count(*) AS "active_patrons" FROM "Patron" WHERE active = true GROUP BY rid) '+
+       'as P on R.rid = P.rid ORDER BY R.rid;'});
 
       q.on('row', function(row, result) {
         result.addRow(row);
@@ -54,8 +60,14 @@ var db_helpers = {
     pg.connect(dbh.conString, function(err, client, done) {
       if(dbh.handleError(err, client, done, res)) return;
 
-      var q = client.query({ name:'get_restaurant', text: 'SELECT * FROM "Restaurant" ' +
-        ' WHERE rid = ' + rid + ';'});
+      //var q = client.query({ name:'get_restaurant', text: 'SELECT * FROM "Restaurant" ' +
+      //  ' WHERE rid = ' + rid + ';'});
+
+      var q = client.query({ name:'get_restaurants',
+       text: 'SELECT name, R.rid, telephone, website, logo_url, description, lat, long, '+
+       'capacity, address, P."active_patrons" from "Restaurant" R LEFT OUTER JOIN '+
+       '(SELECT rid, count(*) AS "active_patrons" FROM "Patron" WHERE active = true GROUP BY rid) '+
+       'as P on R.rid = P.rid WHERE R.rid = ' + rid + 'ORDER BY R.rid;'});
 
       q.on('row', function(row, result) {
         result.addRow(row);
