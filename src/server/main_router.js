@@ -17,7 +17,7 @@ router.get('/historic', function(req, res, next) {
 
 // STATUS: Un-implemented
 router.get('/res', function(req, res, next) {
-  res.render('res_list.html');
+  res.render('res_list');
 });
 
 // STATUS: Mostly implemented, only D3 graphs are left
@@ -30,12 +30,12 @@ router.get('/res/:rid/admin', function(req, res, next) {
   res.render('res_admin', {});
 });
 
-// STATUS: Un-implemented
+// STATUS: FINISHED
 router.get('/flashdeals', function(req, res, next) {
   res.render('flashdeals');
 });
 
-// STATUS: Un-implemented
+// STATUS: FINISHED
 router.get('/flashdeals/:fid', function(req, res, next) {
   res.render('flashdeal');
 });

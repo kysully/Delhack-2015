@@ -52,8 +52,8 @@ app.controller('MapController', ['$scope', '$location', '$http',
     // MAKE API REQUEST TO GRAB ALL THE DATA FOR RESTAURANTS
     /*
     $http.get('/api/respop').success(function(data) {
-      var markers = create_markers(map, dummy_data);
-      var heat = generateHeatLayer(map, dummy_data);
+      var markers = create_markers(map, data);
+      var heat = generateHeatLayer(map, data);
     });*/
 
     /*
@@ -197,10 +197,58 @@ app.controller('DealController', ['$scope', '$location', '$http',
 
     $scope.deal = dummy_deal;
     // Grab restaurant data?
-    
+
     /*
     $http.get('/api/flashdeal/' + fid).success(function(data) {
 
+    });
+    */
+  }
+]);
+
+var update_cap_colors2 = function(active, cap, index) {
+  $('#cap' + index).removeClass('normal_cap');
+  $('#cap' + index).removeClass('high_cap');
+  $('#cap' + index).removeClass('max_cap');
+
+  var percent = active / cap;
+  if(percent < .6) {
+    $('#cap' + index).addClass('normal_cap');
+  }
+  if(percent >= .6 && percent <= .85) {
+    $('#cap' + index).addClass('high_cap');
+  }
+  if(percent > .85) {
+    $('#cap' + index).addClass('max_cap');
+  }
+}
+
+app.controller('ResListController', ['$scope', '$location', '$http',
+  function($scope, $location, $http) {
+    var dummy_data = [
+      { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
+      capacity: 20, active_patrons: 20, logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif",
+      address: "1 Sparrow Lane"},
+      { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
+      active_patrons: 40, logo_url: "www.temp.com/logo",
+      address: "2 Sparrow Lane" },
+      { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
+      capacity: 100, active_patrons: 100, logo_url: "www.temp.com/logo",
+      address: "1 Sparrow Lane"}
+    ];
+
+    $scope.restaurants = dummy_data;
+
+    for(var i = 0, len = $scope.restaurants.length; i < len; i++) {
+      update_cap_colors2($scope.restaurants[i].active_patrons, $scope.restaurants[i].capacity, i);
+    }
+    /*
+    $http.get('/api/res').success(function(data) {
+      $scope.restaurants = data;
+
+      for(var i = 0, len = $scope.restaurants.length; i < len; i++) {
+        update_cap_colors2($scope.restaurants[i].active_patrons, $scope.restaurants[i].capacity, i);
+      }
     });
     */
   }

@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="live-map-app">
+  <head>
+    <title>{{deal.r_name}}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+    <link rel="stylesheet" href="/css/live_style.css">
+  </head>
+  <body ng-controller="ResListController">
+    <% include ./partials/nav %>
+
+    <div class="container">
+      <div class="restaurant" ng-repeat="res in restaurants">
+        <a href="/res/{{res.rid}}"><h1>{{res.name}}</h1></a>
+        <h4>{{res.address}}</h4>
+        <h4>Current Capacity: <span id="cap{{$index}}">{{res.active_patrons}} / {{res.capacity}}</span></h4>
+        <hr>
+      </div>
+    </div>
+
+    <% include ./partials/vendor %>
+    <script type="text/javascript" src="/js/live_map.js"></script>
+  </body>
+</html>

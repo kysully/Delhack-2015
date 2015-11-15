@@ -2,8 +2,8 @@
 ### API Todos
 - [ ] Historical api for a restaurant
 - [ ] Historical api for all restaurants at given time
-- [ ] Patron post api
-- [ ] Flash deal post api
+- [x] Patron post api
+- [x] Flash deal post api
 - [ ] Admin api routes
 
 ### Frontend Todos
@@ -13,6 +13,7 @@
   - [ ] D3 graphs
 - [x] Flash deals page
 - [x] Specific flash deal page
+- [x] list of restaurants
 - [ ] Historical timeline page
 - [ ] Main page
 - [ ] Button page
