@@ -1,9 +1,6 @@
 var router = require('express').Router();
     pg     = require('pg');
-
-// Connect to the postgres database for sessions
-var conString = 'postgres://' + dbCon.user + ':' + dbCon.pass + '@localhost/' +
-  dbCon.db;
+    dbh    = require('./db_helper');
 
 router.get('/', function(req, res, next) {
   res.json([{message: "welcome"}]);
@@ -26,9 +23,9 @@ router.get('/', function(req, res, next) {
 */
 router.get('/res', function(req, res, next) {
 
-	var jsonToReturn = {status: "NOT implemented"};
-
-  res.json(jsonToReturn);
+	//var jsonToReturn = {status: "NOT implemented"};
+	dbh.retrieveRestaurants(res);
+  //res.json(jsonToReturn);
 });
 
 // STATUS: Un-implemented
