@@ -130,9 +130,9 @@ router.get('/flashdeals/:fid', function(req, res, next) {
 */
 
 router.get('/respop', function(req, res, next) {
-  var jsonToReturn = {status: "NOT implemented"};
-
-  res.json(jsonToReturn);
+  //var jsonToReturn = {status: "NOT implemented"};
+  dbh.retrieveResPop(res);
+  //res.json(jsonToReturn);
 });
 
 
