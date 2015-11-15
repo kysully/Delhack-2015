@@ -3,6 +3,8 @@
 var app  = require('./src/server/app');
     http = require('http');
 
+var dbh = require('./src/server/db_helper');
+
 // Determine the port number
 var port = 3000;
 
@@ -19,11 +21,13 @@ server.listen(process.env.PORT || port, process.env.IP || '0.0.0.0', function() 
 //Little's Law tells us that the average number of customers
 //in the store L, is the effective arrival rate λ, times the 
 //average time that a customer spends in the store W, or simply:
-function littlesLaw()
-{
-   //apply the forumla here
-   var L, A, W;
-   setTimeout(littlesLaw, 60000);//once per minute?
-}
+//dbh.littlesLaw();// time is messed up due to local vs GMT. 
+// function littlesLaw()
+// {
+//    //apply the forumla here
+//    var L, A, W;
+//    console.log(rows);
+   
+//    setTimeout(littlesLaw(), 6000);//once per minute?
+// }
 
-littlesLaw();

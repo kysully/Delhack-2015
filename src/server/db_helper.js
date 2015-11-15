@@ -147,7 +147,6 @@ var db_helpers = {
         res.json(result.rows);
       });
     });
-
   },
 
   retrieveResPop: function(res){
@@ -173,6 +172,29 @@ var db_helpers = {
       q.on('end', function(result) {
         done(client);
         res.json(result.rows);
+      });
+    });
+  },
+
+  retrieveActivePatrons: function(res){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      if(dbh.handleError(err, client, done, null)) return;
+
+      var q = client.query({ name:'get_patrons', 
+        text: 'Select * FROM "Patron" WHERE active;'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+          res.json(result.rows);
       });
     });
   },
@@ -265,8 +287,170 @@ var db_helpers = {
         res.json({status: "ok"});
       });
     });
-  }
+  },
 
+  littlesLaw: function(){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      if(dbh.handleError(err, client, done, null)) return;
+
+      var q = client.query({ name:'get_patrons', 
+        text: 'Select * FROM "Patron" WHERE active;'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+        calculateLittlesLaw(result.rows);
+      });
+    });
+  },
+
+  updatePatrons: function(rid, data){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      console.log("Displaing active patrons for rid:" + rid);
+      console.log(data);
+      if(dbh.handleError(err, client, done, null)) return;
+
+      var q = client.query({ name:'get_patrons', 
+        text: 'Select * FROM "Littles_law" WHERE rid = ' + rid + ';'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+
+        // calculate if we need 
+        // arrival_rate current_patrons / time_elapsed_since_last_update
+        // avg_time is from database
+        // amount_to_remove = current_patrons - arrival_rate * avg_time
+        avg_time = result.rows[0].avg_time;
+        last_checked = result.rows[0].last_checked;
+        current_patrons = data[0]; //total patrons is stored here
+        var old_time = new Date(last_checked);
+        var new_time = new Date();
+        new_time = new_time.getTime() - (new_time.getTimezoneOffset() * 60000);
+        console.log("old time " + old_time.getTime());
+        console.log("new time " + new_time);
+        console.log("diff: " + (old_time.getTime() - new_time.getTime()));
+        var elapsed = ((((old_time.getTime() - new_time.getTime())/1000)/60)/60); //convert to hours
+        console.log("elapsed: " + elapsed);
+        var arrival_rate = current_patrons / elapsed;
+        var amount_to_remove = current_patrons - (arrival_rate * avg_time);
+        console.log("We need to remove: " + amount_to_remove);
+        console.log("Arrival rate: " + arrival_rate);
+        console.log(current_patrons);
+        //calculateLittlesLaw(result.rows);
+
+        var proper_new = new_time.toISOString().replace('T', ' ');
+        proper_new = proper_new.replace('Z', '');
+        console.log("proper time: " + proper_new);
+
+        var count = 0;
+        for(var i = 1; i < data.length; i++){
+        //console.log(data[pid]);
+          var pid = data[i];
+          if(count > amount_to_remove || amount_to_remove < 1){
+            break;
+          }else{
+            //update patron and make it not active, give it a time_out
+            count++;
+            pg.connect(dbh.conString, function(err, client, done){
+
+              if(dbh.handleError(err, client, done, null)) return;
+
+              var q = client.query({ name:'get_patrons', 
+                text: 'UPDATE "Patron" set time_out = ' +
+                "\'" + proper_new + "\'" + ', active = FALSE WHERE pid = ' + pid + ';'}); 
+
+              q.on('err', function(err) {
+                dbh.handleError(err, client, done, res);
+              });
+
+              q.on('end', function(result) { //q.on 1
+                done(client);
+                //finally update the littles law table
+                pg.connect(dbh.conString, function(err, client, done){
+
+                  if(dbh.handleError(err, client, done, null)) return;
+
+                  var q = client.query({ name:'get_patrons', 
+                    text: 'UPDATE "Littles_law" set last_checked = ' +
+                    "\'" + proper_new + "\'" + ' WHERE rid = ' + rid + ';'}); 
+
+                  q.on('err', function(err) {
+                    dbh.handleError(err, client, done, res);
+                  });
+
+                  q.on('end', function(result) {
+                    done(client);
+                  });
+                });
+              });//q.on 1
+            });
+          }//end else statement
+        }
+      });
+    });
+  }//end patrons
 };
+
+//find the shortest average wait and use that for the timeout
+//Little's Law tells us that the average number of customers
+//in the store L, is the effective arrival rate λ, times the 
+//average time that a customer spends in the store W, or simply:
+function calculateLittlesLaw(data){
+    //console.log("Called littles law");
+    //code before the pause
+    var twodee = [];
+
+    for(var i = 0; i < data.length; i++){
+      twodee[data[i].rid] = [];
+      twodee[data[i].rid][0] = 0;
+    }
+
+    console.log(twodee);
+
+    for(var i = 0; i < data.length; i++){
+      console.log(data[i].rid);
+      var index = ++twodee[data[i].rid][0]; //total hack
+      twodee[data[i].rid][index] = data[i].pid;
+      //console.log(twodee[data[i].rid][index]);
+    }
+    console.log("\n\n");
+    console.log(twodee.length);
+
+    for(var rid = 0; rid < twodee.length; rid++){
+      //calculate if we need 
+      // arrival_rate current_patrons / time_elapsed_since_last_update
+      // avg_time is from database
+      // amount_to_remove = current_patrons - arrival_rate * avg_time
+      if(typeof twodee[rid] == 'undefined'){
+        console.log("index " + rid +" was undefined");
+      }else{
+        //if you made it here, then i is an rid that has active patrons
+        db_helpers.updatePatrons(rid, twodee[rid]);
+      }
+    }
+
+    var update_interval = 0;//updates the patrons in miliseconds
+    setTimeout(function(){
+      //do what you need here
+      db_helpers.littlesLaw();
+      }, update_interval);
+}
 
 module.exports = db_helpers;

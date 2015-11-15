@@ -139,6 +139,20 @@ router.get('/respop', function(req, res, next) {
   //res.json(jsonToReturn);
 });
 
+// STATUS: Implemented
+/**
+* => GET /patrons
+* <= JSON { [{time_in: "2015-11-15 07:12.212", time_out: "", active: TRUE, rid: 1}] } 
+*
+* - returns all active patrons
+*/
+
+router.get('/patrons', function(req, res, next) {
+  //var jsonToReturn = {status: "NOT implemented"};
+  dbh.retrieveActivePatrons(res);
+  //res.json(jsonToReturn);
+});
+
 
   //==============//
  //     POST     //
@@ -176,7 +190,7 @@ router.post('/res/:rid/flashdeal', function(req, res, next) {
 // STATUS: Implemented
 /**
 * => POST /res/:rid/patron
-*    body: {time_in: "12:00am"}
+*    body: {time_in: '2015-11-15 02:20:15.107-05'}
 * <= JSON { status: "ok" } 
 *
 * - post request to create a new patron
