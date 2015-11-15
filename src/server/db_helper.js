@@ -187,6 +187,41 @@ var db_helpers = {
         res.json(result.rows);
       });
     });
+  },
+
+  postFlashDeal: function(res, rid, params){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      if(dbh.handleError(err, client, done, res)) return;
+
+      var active = false;
+      if(params.active)
+        active = true;
+
+      console.log('INSERT INTO "Flash_deal" (fid, name, description, start_date, '+
+        'end_date, active, rid, code) VALUES '+
+        '( DEFAULT, ' + params.name + ', ' + params.description + ', ' + params.start_date +
+        ', ' + params.end_date + ', ' + active + ', ' +  rid + ', ' + params.code + ');');
+
+      var q = client.query({ name:'post_flashdeal', 
+        text: 'INSERT INTO "Flash_deal" (fid, name, description, start_date, '+
+        'end_date, active, rid, code) VALUES '+
+        '( DEFAULT, ' + params.name + ', ' + params.description + ', ' + params.start_date +
+        ', ' + params.end_date + ', ' + active + ', ' +  rid + ', ' + params.code + ');'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+        res.json(result.rows);
+      });
+    });
   }
 
 };

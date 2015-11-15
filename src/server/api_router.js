@@ -2,6 +2,10 @@ var router = require('express').Router();
     pg     = require('pg');
     dbh    = require('./db_helper');
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+
 router.get('/', function(req, res, next) {
   res.json([{message: "welcome"}]);
 });
@@ -155,7 +159,8 @@ router.post('/res/:rid/historical', function(req, res, next) {
 // STATUS: Un-implemented
 /**
 * => POST /res/:rid/flashdeal
-*    body: {decription: "hi", time_in: "12:00am", time_out: "12:00pm"}
+*    body: {name: "name", decription: "hi", start_date: "12:00am", end_date: "12:00pm",
+*           active: "TRUE", code: "ABC-123"}
 * <= JSON { status: "ok" } 
 *
 * - post request to create a new flashdeal
@@ -165,7 +170,8 @@ router.post('/res/:rid/historical', function(req, res, next) {
 router.post('/res/:rid/flashdeal', function(req, res, next) {
 	//check priviledges
 	//connect to database to make a new flashdeal in the database
-  res.body()
+  console.log(req.body);
+  dbh.postFlashDeal(res, req.params.rid, req.body);
 });
 
 // STATUS: Un-implemented
