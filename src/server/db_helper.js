@@ -54,7 +54,7 @@ var db_helpers = {
     pg.connect(dbh.conString, function(err, client, done) {
       if(dbh.handleError(err, client, done, res)) return;
 
-      var q = client.query({ name:'get_restaurants', text: 'SELECT * FROM "Restaurant" ' +
+      var q = client.query({ name:'get_restaurant', text: 'SELECT * FROM "Restaurant" ' +
         ' WHERE rid = ' + rid + ';'});
 
       q.on('row', function(row, result) {
@@ -80,13 +80,13 @@ var db_helpers = {
       var q;
 
       if(rid == -1){
-        q = client.query({ name:'get_restaurants', 
+        q = client.query({ name:'get_activeflashdeals', 
         text: 'SELECT R.name as "r_name", R.logo_url, F.name as "f_name", F.description, F.fid, ' +
         'F.code, F.start_date, F.end_date from "Restaurant" R JOIN "Flash_deal" F on R.rid = F.rid ' +
         'WHERE F.active = TRUE;'}); 
       }
       else{
-        q = client.query({ name:'get_restaurants', 
+        q = client.query({ name:'get_activeflashdeals', 
         text: 'SELECT R.name as "r_name", R.logo_url, F.name as "f_name", F.description, F.fid, ' +
         'F.code, F.start_date, F.end_date from "Restaurant" R JOIN "Flash_deal" F on R.rid = F.rid ' +
         'WHERE F.active = TRUE AND R.rid = ' + rid + ';'}); 
@@ -117,7 +117,7 @@ var db_helpers = {
     pg.connect(dbh.conString, function(err, client, done) {
       if(dbh.handleError(err, client, done, res)) return;
 
-      var q = client.query({ name:'get_restaurants', 
+      var q = client.query({ name:'get_flashdeals', 
         text: 'SELECT R.name as "r_name", F.name as "f_name", F.description, F.code, ' +
         'F.start_date, F.end_date, F.active from "Restaurant" R JOIN "Flash_deal" F on R.rid = F.rid ' +
         'WHERE F.fid = ' + fid + ';'}); 
@@ -143,12 +143,36 @@ var db_helpers = {
 
       if(dbh.handleError(err, client, done, res)) return;
 
-      var q = client.query({ name:'get_restaurants', 
-        text: 'Select R.rid, R.name, R.lat, R.long, R.capacity, '+
+      var q = client.query({ name:'get_respop', 
+        text: 'Select R.rid, R.name, R.logo_url, R.lat, R.long, R.capacity, '+
         'coalesce(P."active_patrons", 0) as "active_patrons" '+
         'FROM "Restaurant" R LEFT OUTER JOIN (SELECT rid, '+
         'sum(CASE WHEN active THEN 1 ELSE 0 END) AS "active_patrons" '+
         'FROM "Patron" GROUP BY rid) P on R.rid = P.rid;'}); 
+
+      q.on('row', function(row, result) {
+        result.addRow(row);
+      });
+
+      q.on('err', function(err) {
+        dbh.handleError(err, client, done, res);
+      });
+
+      q.on('end', function(result) {
+        done(client);
+        res.json(result.rows);
+      });
+    });
+  },
+
+  retrieveHistorical: function(res, rid){
+    pg.connect(dbh.conString, function(err, client, done){
+
+      if(dbh.handleError(err, client, done, res)) return;
+
+      var q = client.query({ name:'get_historical', 
+        text: 'SELECT * FROM "Restaurant" R LEFT OUTER JOIN '+
+        '"Patron" P on R.rid = P.rid WHERE R.rid = ' + rid + ';'}); 
 
       q.on('row', function(row, result) {
         result.addRow(row);
