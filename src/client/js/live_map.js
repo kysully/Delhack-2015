@@ -50,38 +50,35 @@ app.controller('MapController', ['$scope', '$location', '$http',
     }
 
     // MAKE API REQUEST TO GRAB ALL THE DATA FOR RESTAURANTS
-    /*
     $http.get('/api/respop').success(function(data) {
       var markers = create_markers(map, data);
       var heat = generateHeatLayer(map, data);
-    });*/
+    });
 
-    /*
     $http.get('/api/flashdeals').success(function(data) {
       $scope.deals = data;
     });
-    */
 
-    var dummy_data = [
-      { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
-      capacity: 20, active_patrons: 20, logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif" },
-      { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
-      active_patrons: 40, logo_url: "www.temp.com/logo" },
-      { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
-      capacity: 100, active_patrons: 100, logo_url: "www.temp.com/logo" }
-    ];
-
-    var markers = create_markers(map, dummy_data);
-    var heat = generateHeatLayer(map, dummy_data);
-
-    var dummy_deals = [
-      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
-      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
-      code: "NID-83W", fid: 6,
-      start_date: "", end_date: ""}
-    ];
-
-    $scope.deals = dummy_deals;
+    // var dummy_data = [
+    //   { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
+    //   capacity: 20, active_patrons: 20, logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif" },
+    //   { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
+    //   active_patrons: 40, logo_url: "www.temp.com/logo" },
+    //   { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
+    //   capacity: 100, active_patrons: 100, logo_url: "www.temp.com/logo" }
+    // ];
+    //
+    // var markers = create_markers(map, dummy_data);
+    // var heat = generateHeatLayer(map, dummy_data);
+    //
+    // var dummy_deals = [
+    //   {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
+    //   description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
+    //   code: "NID-83W", fid: 6,
+    //   start_date: "", end_date: ""}
+    // ];
+    //
+    // $scope.deals = dummy_deals;
   }
 ]);
 
@@ -104,85 +101,54 @@ var update_cap_colors = function(active, cap) {
 
 app.controller('RestaurantController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
+    var rid = window.location.href.split("/").pop();
     $scope.res = {
-      name: "Newark Deli & Bagels",
-      rid: window.location.href.split("/").pop(),
-      telephone: "302-xxx-xxxx",
-      website: "www.ndb.com",
-      logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif",
-      description: "The best bagel shop ever :)",
-      active_patrons: 18,
-      capacity: 20,
-      lat: 39.683231,
-      long: -75.752073,
-      address: "35 E. Main Street, Newark DE, 19711"
     };
 
     var dummy_deals = [
-      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
-      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
-      code: "NID-83W", fid: 6,
-      start_date: "", end_date: ""}
     ];
-
-    $scope.deals = dummy_deals;
-
-    // Create the leaflet map
-    var map = L.map('minimap').setView([$scope.res.lat, $scope.res.long], 17);
-
-    // Add the MapBox map data
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'jerkeeler.ciezvjb551emgskm3sptep0iu',
-        accessToken: 'pk.eyJ1IjoiamVya2VlbGVyIiwiYSI6ImNpZXp2amNhdDFlYzBzaGtyNG1yYXd1YmsifQ.NuTiQ7Dkv5-f2_9ajTzZZw'
-    }).addTo(map);
-
-    var new_marker = L.marker([$scope.res.lat, $scope.res.long]);
-    new_marker.addTo(map);
-    update_cap_colors($scope.res.active_patrons, $scope.res.capacity);
 
     $scope.visitDeal = function(fid) {
       visitUrl('/flashdeals/' + fid);
     }
 
-    /*
-    $http.get('/api/res/' + $scope.rid).success(function(data) {
+    $http.get('/api/res/' + rid).success(function(data) {
+      data = data[0];
+      console.log(data);
       $scope.res = data;
-      update_cap_colors($scope.res.active_patrons, $scope.res.capacity);
+
+      // Create the leaflet map
+      var map = L.map('minimap').setView([data.lat, data.long], 17);
+
+      // Add the MapBox map data
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+          maxZoom: 18,
+          id: 'jerkeeler.ciezvjb551emgskm3sptep0iu',
+          accessToken: 'pk.eyJ1IjoiamVya2VlbGVyIiwiYSI6ImNpZXp2amNhdDFlYzBzaGtyNG1yYXd1YmsifQ.NuTiQ7Dkv5-f2_9ajTzZZw'
+      }).addTo(map);
+
+      var new_marker = L.marker([data.lat, data.long]);
+      new_marker.addTo(map);
+      update_cap_colors(data.active_patrons, data.capacity);
     });
 
-    $http.get('/api/res/' + $scope.rid + '/flashdeals').success(function(data) {
+    $http.get('/api/res/' + rid + '/flashdeals').success(function(data) {
       $scope.deals = data;
     });
-    */
   }
 ]);
 
 app.controller('DealsController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     $scope.deals = [
-
     ];
-
-    var dummy_deals = [
-      {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
-      description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
-      code: "NID-83W", fid: 6,
-      start_date: "", end_date: ""},
-      {r_name: "Cal Tor", f_name: "FREE BURRITO", description: 'Get a free ' +
-      'burrito today!', code:'POOPLOOP1', fid:7, start_date:"", end_date:""}
-    ];
-
-    $scope.deals = dummy_deals;
     $scope.visitDeal = function(fid) {
       visitUrl('/flashdeals/' + fid);
     }
-    /*
     $http.get('/api/flashdeals').success(function(data) {
       $scope.deals = data;
     });
-    */
   }
 ]);
 
@@ -190,19 +156,12 @@ app.controller('DealController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
     var fid = window.location.href.split("/").pop();
 
-    var dummy_deal = {r_name: "Newark Deli & Bagels", f_name: "5% off any bagel",
-          description: "Receive 5% off any bagel in the next hour. 1 coupon per person.",
-          code: "NID-83W", fid: 6,
-          start_date: "", end_date: ""}
-
-    $scope.deal = dummy_deal;
+    $scope.deal = {};
     // Grab restaurant data?
 
-    /*
     $http.get('/api/flashdeal/' + fid).success(function(data) {
-
+      $scope.deal = data;
     });
-    */
   }
 ]);
 
@@ -225,31 +184,14 @@ var update_cap_colors2 = function(active, cap, index) {
 
 app.controller('ResListController', ['$scope', '$location', '$http',
   function($scope, $location, $http) {
-    var dummy_data = [
-      { name: "Newark Deli & Bagels", rid: 1, lat: 39.683231, long: -75.752073,
-      capacity: 20, active_patrons: 20, logo_url: "http://www.newarkdeliandbagels.com/images/newark-deli-and-bagels-logo.gif",
-      address: "1 Sparrow Lane"},
-      { name: "Cal Tor", rid: 2, lat: 39.683068, long: -75.751104, capacity: 50,
-      active_patrons: 40, logo_url: "www.temp.com/logo",
-      address: "2 Sparrow Lane" },
-      { name: "Trabant Chapel", rid: 3, lat: 39.682760, long: -75.754585,
-      capacity: 100, active_patrons: 100, logo_url: "www.temp.com/logo",
-      address: "1 Sparrow Lane"}
-    ];
-
-    $scope.restaurants = dummy_data;
-
-    for(var i = 0, len = $scope.restaurants.length; i < len; i++) {
-      update_cap_colors2($scope.restaurants[i].active_patrons, $scope.restaurants[i].capacity, i);
-    }
-    /*
+    $scope.restaurants = [];
     $http.get('/api/res').success(function(data) {
+      console.log(data);
       $scope.restaurants = data;
 
       for(var i = 0, len = $scope.restaurants.length; i < len; i++) {
         update_cap_colors2($scope.restaurants[i].active_patrons, $scope.restaurants[i].capacity, i);
       }
     });
-    */
   }
 ]);
